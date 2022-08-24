@@ -5,13 +5,13 @@ from dbt_markdoc.main import main
 
 @click.command()
 @click.option("--path", default="target/manifest.json", help="Path to dbt manifest")
-def make_docs(path) -> None:
+def make_docs(path: str) -> None:
     _setup_logger("INFO")
 
     main(path)
 
 
-def _setup_logger(log_level="INFO"):
+def _setup_logger(log_level: str = "INFO") -> logging.Logger:
     log_format = (
         "%(asctime)s - %(message)s" if log_level == "INFO" else "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )

@@ -1,12 +1,12 @@
 # from dataclasses import dataclass
 from functools import reduce
-from typing import MutableMapping
+from typing import Any, MutableMapping, TypeAlias
 from dbt.contracts.graph.manifest import Manifest
 from dbt.contracts.graph.parsed import ParsedNode, ParsedSourceDefinition, ParsedMacro
 
 NODE_TYPE_MAP = {"macro": "macros", "model": "nodes", "source": "sources"}
 
-GeneralParsedNode = ParsedNode | ParsedSourceDefinition | ParsedMacro
+GeneralParsedNode: TypeAlias = ParsedNode | ParsedSourceDefinition | ParsedMacro
 
 
 # @dataclass
@@ -40,5 +40,7 @@ def standardize_sub_manifest_nodes(
     return node_type_docs
 
 
-def flatten_manifest_nodes(standard_manifest: dict[str, dict[str, dict]]) -> list[dict[str, GeneralParsedNode]]:
+def flatten_manifest_nodes(
+    standard_manifest: dict[str, dict[str, dict[str, Any]]]
+) -> list[dict[str, GeneralParsedNode]]:
     return [*reduce(lambda a, b: a | b, standard_manifest.values()).values()]
