@@ -1,16 +1,12 @@
 # from dataclasses import dataclass
 from functools import reduce
 from typing import MutableMapping
-from jinja2 import Environment
 from dbt.contracts.graph.manifest import Manifest
 from dbt.contracts.graph.parsed import ParsedNode, ParsedSourceDefinition, ParsedMacro
 
 NODE_TYPE_MAP = {"macro": "macros", "model": "nodes", "source": "sources"}
 
 GeneralParsedNode = ParsedNode | ParsedSourceDefinition | ParsedMacro
-
-# ParsedNode does not encompass all props of sources and macros...
-# TODO: Make own complete wrapper class to import here
 
 
 # @dataclass
@@ -27,20 +23,19 @@ GeneralParsedNode = ParsedNode | ParsedSourceDefinition | ParsedMacro
 #     markdoc: str = ""
 
 
-def standardize_nodes(manifest: Manifest, env: Environment) -> dict[str, dict[str, GeneralParsedNode]]:
+def standardize_nodes(manifest: Manifest) -> dict[str, dict[str, GeneralParsedNode]]:
     docs = {
-        node_type: standardize_sub_manifest_nodes(getattr(manifest, NODE_TYPE_MAP[node_type]), env)
-        for node_type in NODE_TYPE_MAP.keys()
+        node_type: standardize_sub_manifest_nodes(getattr(manifest, node_orig_type))
+        for node_type, node_orig_type in NODE_TYPE_MAP.items()
     }
 
     return docs
 
 
 def standardize_sub_manifest_nodes(
-    sub_manifest: MutableMapping[str, GeneralParsedNode], env: Environment
+    sub_manifest: MutableMapping[str, GeneralParsedNode],
 ) -> dict[str, GeneralParsedNode]:
-    # TODO: Reparse node into AugNode once definition made
-    node_type_docs = {node_id: node for node_id, node in sub_manifest.items()}
+    node_type_docs = dict(sub_manifest.items())
 
     return node_type_docs
 

@@ -9,11 +9,11 @@ def main(path):
     env = Environment(loader=PackageLoader("dbt_markdoc", "templates"))
 
     # Load and parse manifest JSON
-    with open(path, "r+") as stream:
+    with open(path, "r+", encoding="utf-8") as stream:
         manifest = Manifest.from_dict(json.load(stream))
 
     # Add documentation to manifest nodes
-    standard_manifest = standardize_nodes(manifest, env)
+    standard_manifest = standardize_nodes(manifest)
 
     # Flatten node hierarchy to list of nodes
     nodes = flatten_manifest_nodes(standard_manifest)
@@ -26,7 +26,7 @@ def main(path):
     #     .to_list()
     # )
 
-    return nodes
+    return env, nodes
 
     # {"markdoc": templates[node.resource_type].render(**node.__dict__)}
 
