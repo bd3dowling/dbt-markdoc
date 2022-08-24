@@ -1,5 +1,5 @@
-import click
 import logging
+import click
 from dbt_markdoc.main import main
 
 
