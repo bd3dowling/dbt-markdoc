@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+# from dataclasses import dataclass
 from functools import reduce
 from typing import MutableMapping
 from jinja2 import Environment
@@ -11,21 +11,23 @@ GeneralParsedNode = ParsedNode | ParsedSourceDefinition | ParsedMacro
 
 # ParsedNode does not encompass all props of sources and macros...
 # TODO: Make own complete wrapper class to import here
-@dataclass
-class AugNode:
-    config: NodeConfig
-    tags: list[str]
-    refs: list[list[str]]
-    sources: list[list[str]]
-    depends_on: DependsOn
-    description: str
-    meta: dict[str, Any]
-    columns: dict[str, ColumnInfo]
-    docs: Docs
-    markdoc: str = ""
 
 
-def standardize_nodes(manifest: Manifest, env: Environment) -> dict[str, dict[str, AugNode]]:
+# @dataclass
+# class AugNode:
+#     config: NodeConfig
+#     tags: list[str]
+#     refs: list[list[str]]
+#     sources: list[list[str]]
+#     depends_on: DependsOn
+#     description: str
+#     meta: dict[str, Any]
+#     columns: dict[str, ColumnInfo]
+#     docs: Docs
+#     markdoc: str = ""
+
+
+def standardize_nodes(manifest: Manifest, env: Environment) -> dict[str, dict[str, GeneralParsedNode]]:
     docs = {
         node_type: standardize_sub_manifest_nodes(getattr(manifest, NODE_TYPE_MAP[node_type]), env)
         for node_type in NODE_TYPE_MAP.keys()
@@ -36,12 +38,12 @@ def standardize_nodes(manifest: Manifest, env: Environment) -> dict[str, dict[st
 
 def standardize_sub_manifest_nodes(
     sub_manifest: MutableMapping[str, GeneralParsedNode], env: Environment
-) -> dict[str, AugNode]:
+) -> dict[str, GeneralParsedNode]:
     # TODO: Reparse node into AugNode once definition made
     node_type_docs = {node_id: node for node_id, node in sub_manifest.items()}
 
     return node_type_docs
 
 
-def flatten_manifest_nodes(standard_manifest: dict[str, dict[str, AugNode]]) -> list[dict[str, AugNode]]:
+def flatten_manifest_nodes(standard_manifest: dict[str, dict[str, dict]]) -> list[dict[str, GeneralParsedNode]]:
     return [*reduce(lambda a, b: a | b, standard_manifest.values()).values()]

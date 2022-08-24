@@ -27,6 +27,8 @@ def main(path):
         .to_list()
     )
 
+    print(models)
+
     # {"markdoc": templates[node.resource_type].render(**node.__dict__)}
 
     # with open("test_output.md", "w+") as stream:
