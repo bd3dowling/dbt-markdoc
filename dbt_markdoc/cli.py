@@ -13,9 +13,7 @@ def make_docs(path) -> None:
 
 def _setup_logger(log_level="INFO"):
     log_format = (
-        "%(asctime)s - %(message)s"
-        if log_level == "INFO"
-        else "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        "%(asctime)s - %(message)s" if log_level == "INFO" else "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
 
     formatter = logging.Formatter(log_format, datefmt="%H:%M:%S")
