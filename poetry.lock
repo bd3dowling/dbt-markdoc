@@ -163,6 +163,19 @@ python-versions = ">=2.7, !=3.0.*"
 graph = ["objgraph (>=1.7.2)"]
 
 [[package]]
+name = "flake8"
+version = "5.0.4"
+description = "the modular source code checker: pep8 pyflakes and co"
+category = "dev"
+optional = false
+python-versions = ">=3.6.1"
+
+[package.dependencies]
+mccabe = ">=0.7.0,<0.8.0"
+pycodestyle = ">=2.9.0,<2.10.0"
+pyflakes = ">=2.5.0,<2.6.0"
+
+[[package]]
 name = "future"
 version = "0.18.2"
 description = "Clean single-source support for Python 3 and 2"
@@ -300,6 +313,14 @@ pyyaml = ">=3.13"
 typing-extensions = "*"
 
 [[package]]
+name = "mccabe"
+version = "0.7.0"
+description = "McCabe checker, plugin for flake8"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "minimal-snowplow-tracker"
 version = "0.0.2"
 description = "A minimal snowplow event tracker for Python. Add analytics to your Python and Django apps, webapps and games"
@@ -385,6 +406,14 @@ docs = ["furo (>=2021.7.5b38)", "proselint (>=0.10.2)", "sphinx (>=4)", "sphinx-
 test = ["appdirs (==1.4.4)", "pytest (>=6)", "pytest-cov (>=2.7)", "pytest-mock (>=3.6)"]
 
 [[package]]
+name = "pycodestyle"
+version = "2.9.1"
+description = "Python style guide checker"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "pycparser"
 version = "2.21"
 description = "C parser in Python"
@@ -406,6 +435,14 @@ typing-extensions = ">=3.7.4.3"
 [package.extras]
 dotenv = ["python-dotenv (>=0.10.4)"]
 email = ["email-validator (>=1.0.3)"]
+
+[[package]]
+name = "pyflakes"
+version = "2.5.0"
+description = "passive checker of Python programs"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
 
 [[package]]
 name = "pyfunctional"
@@ -598,7 +635,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "61422498f39ace17598bdf226e8bf047c86ab70bddb69d0fa81aebd57925e118"
+content-hash = "598779b962cc16a4406642174b8a53fad7e53d906ed8bef50a5baf1f0eabc187"
 
 [metadata.files]
 agate = [
@@ -732,6 +769,10 @@ dill = [
     {file = "dill-0.3.4-py2.py3-none-any.whl", hash = "sha256:7e40e4a70304fd9ceab3535d36e58791d9c4a776b38ec7f7ec9afc8d3dca4d4f"},
     {file = "dill-0.3.4.zip", hash = "sha256:9f9734205146b2b353ab3fec9af0070237b6ddae78452af83d2fca84d739e675"},
 ]
+flake8 = [
+    {file = "flake8-5.0.4-py2.py3-none-any.whl", hash = "sha256:7a1cf6b73744f5806ab95e526f6f0d8c01c66d7bbe349562d22dfca20610b248"},
+    {file = "flake8-5.0.4.tar.gz", hash = "sha256:6fbe320aad8d6b95cec8b8e47bc933004678dc63095be98528b7bdd2a9f510db"},
+]
 future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
 ]
@@ -849,6 +890,10 @@ mashumaro = [
     {file = "mashumaro-2.9-py3-none-any.whl", hash = "sha256:f616df410d82936b8bb2b4d32af570556685d77f49acf4228134b50230a69799"},
     {file = "mashumaro-2.9.tar.gz", hash = "sha256:343b6e2d3e432e31973688c4c8821dcd6ef41fd33264b992afc4aecbfd155f18"},
 ]
+mccabe = [
+    {file = "mccabe-0.7.0-py2.py3-none-any.whl", hash = "sha256:6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e"},
+    {file = "mccabe-0.7.0.tar.gz", hash = "sha256:348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325"},
+]
 minimal-snowplow-tracker = [
     {file = "minimal-snowplow-tracker-0.0.2.tar.gz", hash = "sha256:acabf7572db0e7f5cbf6983d495eef54081f71be392330eb3aadb9ccb39daaa4"},
 ]
@@ -912,6 +957,10 @@ platformdirs = [
     {file = "platformdirs-2.5.2-py3-none-any.whl", hash = "sha256:027d8e83a2d7de06bbac4e5ef7e023c02b863d7ea5d079477e722bb41ab25788"},
     {file = "platformdirs-2.5.2.tar.gz", hash = "sha256:58c8abb07dcb441e6ee4b11d8df0ac856038f944ab98b7be6b27b2a3c7feef19"},
 ]
+pycodestyle = [
+    {file = "pycodestyle-2.9.1-py2.py3-none-any.whl", hash = "sha256:d1735fc58b418fd7c5f658d28d943854f8a849b01a5d0a1e6f3f3fdd0166804b"},
+    {file = "pycodestyle-2.9.1.tar.gz", hash = "sha256:2c9607871d58c76354b697b42f5d57e1ada7d261c261efac224b664affdc5785"},
+]
 pycparser = [
     {file = "pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
     {file = "pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
@@ -952,6 +1001,10 @@ pydantic = [
     {file = "pydantic-1.9.0-cp39-cp39-win_amd64.whl", hash = "sha256:2cc6a4cb8a118ffec2ca5fcb47afbacb4f16d0ab8b7350ddea5e8ef7bcc53a16"},
     {file = "pydantic-1.9.0-py3-none-any.whl", hash = "sha256:085ca1de245782e9b46cefcf99deecc67d418737a1fd3f6a4f511344b613a5b3"},
     {file = "pydantic-1.9.0.tar.gz", hash = "sha256:742645059757a56ecd886faf4ed2441b9c0cd406079c2b4bee51bcc3fbcd510a"},
+]
+pyflakes = [
+    {file = "pyflakes-2.5.0-py2.py3-none-any.whl", hash = "sha256:4579f67d887f804e67edb544428f264b7b24f435b263c4614f384135cea553d2"},
+    {file = "pyflakes-2.5.0.tar.gz", hash = "sha256:491feb020dca48ccc562a8c0cbe8df07ee13078df59813b83959cbdada312ea3"},
 ]
 pyfunctional = [
     {file = "PyFunctional-1.4.3-py3-none-any.whl", hash = "sha256:50f11ea3c386c4330c7a8be92c0736b4b6a5924bdbd00b8b93f93b0c7fe6f2b3"},
