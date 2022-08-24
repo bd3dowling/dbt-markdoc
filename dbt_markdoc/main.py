@@ -1,7 +1,6 @@
 import json
 from jinja2 import Environment, PackageLoader
 from dbt.contracts.graph.manifest import Manifest
-from functional import seq
 from dbt_markdoc.functions.manifest_functions import flatten_manifest_nodes, standardize_nodes
 
 
@@ -20,14 +19,14 @@ def main(path):
     nodes = flatten_manifest_nodes(standard_manifest)
 
     # Filter out DBT nodes
-    models = (
-        seq(*nodes)
-        .filter(lambda n: n["package_name"] != "dbt")
-        .filter(lambda n: not n["package_name"].startswith("dbt_"))
-        .to_list()
-    )
+    # models = (
+    #     seq(*nodes)
+    #     .filter(lambda n: n["package_name"] != "dbt")
+    #     .filter(lambda n: not n["package_name"].startswith("dbt_"))
+    #     .to_list()
+    # )
 
-    print(models)
+    return nodes
 
     # {"markdoc": templates[node.resource_type].render(**node.__dict__)}
 
