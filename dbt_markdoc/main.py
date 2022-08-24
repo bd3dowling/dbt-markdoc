@@ -1,10 +1,10 @@
 import json
 from jinja2 import Environment, PackageLoader
 from dbt.contracts.graph.manifest import Manifest
-from dbt_markdoc.functions.manifest_functions import flatten_manifest_nodes, standardize_nodes
+from dbt_markdoc.functions.manifest_functions import GeneralParsedNode, flatten_manifest_nodes, standardize_nodes
 
 
-def main(path):
+def main(path: str) -> tuple[Environment, list[dict[str, GeneralParsedNode]]]:
     # Create Jinja2 environment
     env = Environment(loader=PackageLoader("dbt_markdoc", "templates"))
 
