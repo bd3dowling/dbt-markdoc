@@ -1,10 +1,11 @@
 import json
 from jinja2 import Environment, PackageLoader
 from dbt.contracts.graph.manifest import Manifest
-from dbt_markdoc.functions.manifest_functions import GeneralParsedNode, flatten_manifest_nodes, standardize_nodes
+
+from dbt_markdoc.functions.manifest_functions import standardize_manifest
 
 
-def main(path: str) -> tuple[Environment, list[dict[str, GeneralParsedNode]]]:
+def main(path: str) -> None:
     # Create Jinja2 environment
     env = Environment(loader=PackageLoader("dbt_markdoc", "templates"))
 
@@ -12,11 +13,10 @@ def main(path: str) -> tuple[Environment, list[dict[str, GeneralParsedNode]]]:
     with open(path, "r+", encoding="utf-8") as stream:
         manifest = Manifest.from_dict(json.load(stream))
 
-    # Add documentation to manifest nodes
-    standard_manifest = standardize_nodes(manifest)
+    # Standardize and tidy manifest
+    standard_manifest = standardize_manifest(manifest)
 
-    # Flatten node hierarchy to list of nodes
-    nodes = flatten_manifest_nodes(standard_manifest)
+    print(standard_manifest, env)
 
     # Filter out DBT nodes
     # models = (
@@ -25,8 +25,6 @@ def main(path: str) -> tuple[Environment, list[dict[str, GeneralParsedNode]]]:
     #     .filter(lambda n: not n["package_name"].startswith("dbt_"))
     #     .to_list()
     # )
-
-    return env, nodes
 
     # {"markdoc": templates[node.resource_type].render(**node.__dict__)}
 

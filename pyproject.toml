@@ -32,15 +32,21 @@ line-length = 120
 # Include a hint for the correct naming format with invalid-name.
 include-naming-hint = true
 
+extension-pkg-whitelist = ["pydantic"]
+
 # Ignore docstrings
 disable = [
     "missing-module-docstring",
-    "missing-function-docstring"
+    "missing-function-docstring",
+    "missing-class-docstring"
 ]
 
 [tool.pylint.format]
 # Maximum number of characters on a single line.
 max-line-length = 120
+
+[tool.pylint.design]
+disable = ["too-few-public-methods"]
 
 [tool.pylint.typecheck]
 signature-mutators = [
