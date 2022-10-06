@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from dbt.node_types import NodeType
 
 
 class StandardNodeConfig(BaseModel):
@@ -14,7 +15,6 @@ class StandardSourceConfig(BaseModel):
 class StandardDependencies(BaseModel):
     macros: list[str] = []
     nodes: list[str] = []
-    sources: list[str] = []
 
 
 class StandardColumnInfo(BaseModel):
@@ -36,7 +36,7 @@ class StandardModel(BaseModel):
     config: StandardNodeConfig
     tags: list[str]
     description: str
-    columns: dict[str, StandardColumnInfo]
+    columns: list[StandardColumnInfo]
     depends_on: StandardDependencies
     show_docs: bool
     database: str
@@ -44,6 +44,7 @@ class StandardModel(BaseModel):
     raw_sql: str
     path: str
     package_name: str
+    resource_type: NodeType = NodeType.Model
 
 
 class StandardSource(BaseModel):
@@ -52,7 +53,7 @@ class StandardSource(BaseModel):
     config: StandardSourceConfig
     tags: list[str]
     description: str
-    columns: dict[str, StandardColumnInfo]
+    columns: list[StandardColumnInfo]
     database: str
     schema_: str = Field(aliases=["schema"])
     identifier: str
@@ -60,6 +61,7 @@ class StandardSource(BaseModel):
     source_description: str
     path: str
     package_name: str
+    resource_type: NodeType = NodeType.Source
 
 
 class StandardMacro(BaseModel):
@@ -70,11 +72,12 @@ class StandardMacro(BaseModel):
     arguments: list[StandardMacroArg]
     description: str
     show_docs: bool
+    usage_info: str
     path: str
     package_name: str
+    resource_type: NodeType = NodeType.Macro
 
 
 class StandardManifest(BaseModel):
-    models: dict[str, StandardModel]
-    sources: dict[str, StandardSource]
+    nodes: dict[str, StandardModel | StandardSource]
     macros: dict[str, StandardMacro]
