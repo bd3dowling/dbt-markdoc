@@ -1,6 +1,8 @@
-# [{{ name }}]({{ path }})
+# [`{{ name }}`]({{ path }})
 
-{{ description }}
+{{ description or "No description provided" -}}
+
+{% if arguments -%}
 
 ## Arguments
 
@@ -12,10 +14,11 @@
 
 {% endfor -%}
 
-{% if meta.usage -%}
+{% if usage_info -%}
 
 ## Usage
 
-{{ meta.usage }}
+{{ usage_info }}
 
-{% endif %}
+{% endif -%}
+{% endif -%}

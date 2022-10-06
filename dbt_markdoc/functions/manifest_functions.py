@@ -20,8 +20,7 @@ from dbt_markdoc.models.standard_manifest import (
 
 def standardize_manifest(manifest: Manifest) -> StandardManifest:
     return StandardManifest(
-        models=standardize_models(manifest.nodes),
-        sources=standardize_sources(manifest.sources),
+        nodes=standardize_models(manifest.nodes) | standardize_sources(manifest.sources),
         macros=standardize_macros(manifest.macros),
     )
 
@@ -43,19 +42,18 @@ def standardize_models(manifest_nodes: MutableMapping[str, ManifestNode]) -> dic
             ),
             tags=node.tags,
             description=node.description,
-            columns={
-                col_id: StandardColumnInfo(
+            columns=[
+                StandardColumnInfo(
                     name=col.name,
                     description=col.description,
                     data_type=col.data_type or "",
                     tags=col.tags,
                 )
-                for col_id, col in node.columns.items()
-            },
+                for col in node.columns.values()
+            ],
             depends_on=StandardDependencies(
-                macros=node.depends_on.macros,
                 nodes=node.depends_on.nodes,
-                sources=[source for source_list in node.sources for source in source_list],
+                macros=node.depends_on.macros,
             ),
             show_docs=node.docs.show,
             database=node.database or "",
@@ -76,15 +74,15 @@ def standardize_sources(manifest_sources: MutableMapping[str, ParsedSourceDefini
             config=StandardSourceConfig(enabled=source.config.enabled),
             tags=source.tags,
             description=source.description,
-            columns={
-                col_id: StandardColumnInfo(
+            columns=[
+                StandardColumnInfo(
                     name=col.name,
                     description=col.description,
                     data_type=col.data_type or "",
                     tags=col.tags,
                 )
-                for col_id, col in source.columns.items()
-            },
+                for col in source.columns.values()
+            ],
             database=source.database or "",
             schema_=source.schema,
             identifier=source.identifier,
@@ -109,6 +107,7 @@ def standardize_macros(manifest_macros: MutableMapping[str, ParsedMacro]) -> dic
                 for arg in macro.arguments
             ],
             description=macro.description,
+            usage_info=macro.meta.get("usage", ""),
             show_docs=macro.docs.show,
             path=macro.path,
             package_name=macro.package_name,

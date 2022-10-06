@@ -1,39 +1,53 @@
-# [{{ name }}]({{ path }})
+# [`{{ name }}`]({{ path }})
 
-{{ description }}
+{{ description or "No description provided" }}
 
 ## Columns
 
-{% for col in columns -%}
+{{ "No column metadata provided" if not columns }}
 
-* `{{ col.name }}` : *`{{ col.date_type }}`*
+{%- for col in columns -%}
+
+* `{{ col.name }}` : *`{{ col.data_type or "Unknown" }}`*
 
     {{ col.description }}
 
-{% endfor -%}
+{% endfor %}
 
 ## Dependencies
 
+{% if depends_on.models -%}
+
 ### Models
 
-{% for model in dependencies.models -%}
+{% for model in depends_on.models -%}
 
-* `[{{ model.name }}]({{ model.path }})`
+* [`{{ model.name }}`]({{ model.path }})
 
 {% endfor -%}
+
+{% endif -%}
+
+{% if depends_on.sources -%}
 
 ### Sources
 
-{% for source in dependencies.sources -%}
+{% for source in depends_on.sources -%}
 
-* `[{{ source.name }}]({{ source.path }})`
+* [`{{ source.name }}`]({{ source.path }})
 
 {% endfor -%}
+
+{% endif -%}
+
+{% if depends_on.macros -%}
 
 ### Macros
 
-{% for macro in dependencies.macros -%}
+{% for macro in depends_on.macros -%}
 
-* `[{{ macro.anme }}]({{ macro.path }})`
+* [`{{ macro.name }}`]({{ macro.path }})
 
 {% endfor -%}
+
+{% endif -%}

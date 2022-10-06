@@ -1,20 +1,20 @@
-# [{{ name }}]({{ path }})
+# [`{{ name }}`]({{ path }})
 
 {{ description }}
 
 ## Source Info
 
-Source Name: {{ source_name }}
+**Name**: `{{ source_name }}`
 
-Source Description: {{ source_description }}
+**Description**: {{ source_description or "Not provided" }}
 
-Source Database: {{ source_database }}
+**Database**: `{{ database | upper }}`
 
-Source Schema: {{ source_schema }}
+**Schema**: `{{ schema_ | upper }}`
 
 ## Columns
 
-{{ 'No columns described' if not columns -}}
+{{ "No column metadata provided" if not columns -}}
 
 {% for col in columns -%}
 
@@ -22,4 +22,4 @@ Source Schema: {{ source_schema }}
 
     {{ col.description }}
 
-{% endfor -%}
+{% endfor %}
